@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter Notebook 체크포인트
+.ipynb_checkpoints/
+
+# 환경 설정
+.env
+*.env
+.env.*
+
+# VSCode 등 IDE 설정
+.vscode/
+*.code-workspace
+
+# Mac OS, 시스템 파일
+.DS_Store
+
+# 모델/데이터
+data/*.csv
+data/*.xlsx
+data/*.parquet
+data/*.json
+
+# Output 디렉토리 무시
+output/*
+!output/.gitkeep
+

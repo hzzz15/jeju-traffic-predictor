@@ -27,3 +27,4 @@ data/*.json
 output/*
 !output/.gitkeep
 
+data/*.csv

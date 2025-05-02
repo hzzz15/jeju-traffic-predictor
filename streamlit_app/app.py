@@ -6,7 +6,7 @@ from utils import preprocess_input, predict_speed
 st.set_page_config(page_title="제주 도로 속도 예측기", layout="centered")
 
 # 설명
-st.title("🚗 제주 도로 평균 속도 예측기")
+st.title("제주 도로 평균 속도 예측기")
 st.markdown("""
 - 도로명, 요일, 시간대 구분(업무시간/비업무시간), 계절, 7~9월 여부를 입력하면 **예상 평균 속도**를 예측합니다.
 - 예측 결과는 **관광객 유입 분석**, **혼잡도 예측**, **도로 운영 최적화** 등에 활용될 수 있습니다.

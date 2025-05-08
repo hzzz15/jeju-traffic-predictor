@@ -24,7 +24,7 @@ august_list  = ['Y', 'N']
 time_options = ['업무시간 (08:00~20:00)', '비업무시간 (나머지)']
 
 # 입력 폼
-st.subheader("📝 예측 조건 입력")
+st.subheader("예측 조건 입력")
 road     = st.selectbox("도로명", road_list)
 weekday  = st.selectbox("요일", weekday_list)
 time_sel = st.selectbox("시간대 구분", time_options)

@@ -1,6 +1,9 @@
+import sys
 import os
-import joblib
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import streamlit as st
+import joblib
 from utils import preprocess_input, predict_speed
 
 # 페이지 설정
@@ -13,8 +16,8 @@ st.markdown("""
 - 예측 결과는 **관광객 유입 분석**, **혼잡도 예측**, **도로 운영 최적화** 등에 활용될 수 있습니다.
 """)
 
-# le_road.pkl만 단독 로드하여 도로 리스트 추출
-base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'output'))
+# 경로 수정
+base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'output'))
 le_road = joblib.load(os.path.join(base_path, 'le_road.pkl'))
 road_list = le_road.classes_.tolist()
 
@@ -37,17 +40,16 @@ if st.button("평균 속도 예측"):
     user_input = {
         "road_name":       road,
         "weekday":         weekday,
-        "time_type":       "worktime" if time_sel.startswith("업무시간") else "resttime",
+        "time_type":       "worktime" if time_sel == '08~20시' else "resttime",
         "season":          season,
         "adjacent_august": august
     }
 
     df_enc = preprocess_input(user_input)
 
-    # 인코딩 된 값 확인
+    # 인코딩된 값 디버깅 로그
     print("[DEBUG] Encoded input:", df_enc.iloc[0].to_dict())
 
-    # 예측 실행
     try:
         pred = predict_speed(df_enc)
         st.success(f"예측된 평균 속도는 **{pred:.2f} km/h** 입니다.")

@@ -5,7 +5,7 @@ import requests
 import io
 
 # Hugging Face 모델 파일 URL 
-HF_MODEL_URL = "https://huggingface.co/hzz15/jeju-traffic-files/resolve/main/rf_model_compressed.pkl"
+HF_MODEL_URL = "https://huggingface.co/hzz15/jeju-traffic-files/resolve/main/rf_model_light.pkl"
 
 # 로컬 인코더 저장 경로
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), "model_artifacts"))

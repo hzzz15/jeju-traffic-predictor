@@ -19,3 +19,7 @@ def predict(request: PredictRequest):
     input_df = input_df[features]
     pred = float(model.predict(input_df)[0])
     return {"prediction": round(pred, 2)}
+
+@app.get("/")
+def root():
+    return {"message": "FastAPI backend is running!"}

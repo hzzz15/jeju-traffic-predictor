@@ -1,7 +1,9 @@
 streamlit
-requests
 pandas
+numpy
+joblib
+requests
+scikit-learn
 matplotlib
 seaborn
 shap
-joblib

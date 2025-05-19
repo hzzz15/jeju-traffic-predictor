@@ -28,3 +28,6 @@ output/*
 !output/.gitkeep
 
 data/*.csv
+
+# 모델 무시
+backend_api/model_artifacts/

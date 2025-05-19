@@ -1,7 +1,13 @@
 import joblib
 import os
 import pandas as pd
+import requests
+import io
 
+# Hugging Face 모델 파일 URL (정확한 경로로 바꿔줘)
+HF_MODEL_URL = "https://huggingface.co/hzz15/jeju-traffic-files/resolve/main/rf_model.pkl"
+
+# 로컬 인코더 저장 경로
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), "model_artifacts"))
 
 def safe_transform(le, vals, default=0):
@@ -14,8 +20,13 @@ def safe_transform(le, vals, default=0):
     return out
 
 def load_artifacts():
+    # 1️⃣ 모델은 Hugging Face에서 로드
+    response = requests.get(HF_MODEL_URL)
+    model = joblib.load(io.BytesIO(response.content))
+
+    # 2️⃣ 인코더와 feature_columns는 로컬에서 로드
     return {
-        "model": joblib.load(os.path.join(BASE, 'rf_model.pkl')),
+        "model": model,
         "features": joblib.load(os.path.join(BASE, 'feature_columns.pkl')),
         "le_road": joblib.load(os.path.join(BASE, 'le_road.pkl')),
         "le_time": joblib.load(os.path.join(BASE, 'le_시간대.pkl')),

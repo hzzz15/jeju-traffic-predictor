@@ -17,17 +17,30 @@ __pycache__/
 # Mac OS, 시스템 파일
 .DS_Store
 
-# 모델/데이터
+# 데이터 파일 (로컬)
 data/*.csv
 data/*.xlsx
 data/*.parquet
 data/*.json
 
-# Output 디렉토리 무시
-output/*
-!output/.gitkeep
+# 모델/데이터 중 대용량 파일 제외 - Hugging Face
+output/X_train.pkl
+output/X_val.pkl
+output/y_train.pkl
 
-data/*.csv
+# output/ 내 사용하지 않는 대용량 및 예측 결과 파일 무시
+output/final_prediction_baseline.csv
+output/final_prediction_rf.csv
+output/label_encoders.pkl
+output/perm_importance_df.pkl
+output/test_X.pkl
+output/X_train.pkl
+output/X_val.pkl
+output/y_train.pkl
+output/y_val.pkl
 
-# 모델 무시
-backend_api/model_artifacts/
+# 모델 제외
+backend_api/model_artifacts/rf_model.pkl
+
+# 기타
+*.log

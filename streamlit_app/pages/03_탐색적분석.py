@@ -19,6 +19,11 @@ else:
     plt.rcParams["font.family"] = "DejaVu Sans"
     plt.rcParams["font.sans-serif"] = ["NanumGothic", "Arial", "sans-serif"]
 
+# 컬럼명 영어 매핑
+column_map = {
+    "시간대": "time_type",
+}
+
 # 제목
 st.title("탐색적 분석 (EDA) 리포트")
 

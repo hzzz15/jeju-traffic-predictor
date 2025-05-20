@@ -7,11 +7,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import platform
 
+# 시각화 설정
 sns.set_style("whitegrid")
 plt.rcParams['axes.unicode_minus'] = False
 
-# 폰트 설정
-if platform.system() == "Darwin": 
+# 플랫폼별 폰트 설정
+if platform.system() == "Darwin":
     plt.rcParams["font.family"] = "AppleGothic"
 else:
     plt.rcParams["font.family"] = "DejaVu Sans"

@@ -5,10 +5,17 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import platform
 
 sns.set_style("whitegrid")
 plt.rcParams['axes.unicode_minus'] = False
-plt.rcParams["font.family"] = "AppleGothic"
+
+# 폰트 설정
+if platform.system() == "Darwin": 
+    plt.rcParams["font.family"] = "AppleGothic"
+else:
+    plt.rcParams["font.family"] = "DejaVu Sans"
+    plt.rcParams["font.sans-serif"] = ["NanumGothic", "Arial", "sans-serif"]
 
 # 데이터 로딩
 base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'output'))

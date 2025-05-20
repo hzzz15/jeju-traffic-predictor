@@ -18,6 +18,11 @@ else:
     plt.rcParams["font.family"] = "DejaVu Sans"
     plt.rcParams["font.sans-serif"] = ["Arial", "sans-serif"]
 
+# 컬럼명 영어 매핑
+column_map = {
+    "시간대": "time_type",
+}
+
 # 데이터 로딩
 base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'output'))
 

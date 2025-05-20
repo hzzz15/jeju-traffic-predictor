@@ -1,16 +1,19 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import joblib
 import requests
+import platform
 from io import BytesIO
 
-import os
 sns.set_style("whitegrid")
 plt.rcParams['axes.unicode_minus'] = False
-plt.rcParams["font.family"] = "AppleGothic"
+
+if platform.system() == "Darwin":  # macOS
+    plt.rcParams["font.family"] = "AppleGothic"
+else:
+    plt.rcParams["font.family"] = "sans-serif"
+    plt.rcParams["font.sans-serif"] = ["NanumGothic", "Malgun Gothic", "DejaVu Sans", "Arial"]
 
 st.title("EDA 시각화")
 

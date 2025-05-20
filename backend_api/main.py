@@ -1,8 +1,10 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from schemas import PredictRequest
-from model_loader import load_artifacts, preprocess_input
+from backend_api.schemas import PredictRequest
+from backend_api.model_loader import load_artifacts, preprocess_input
 import traceback
+from fastapi.responses import JSONResponse
+
 
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -10,29 +12,28 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 # 모델, 인코더, feature list
 artifacts = load_artifacts()
 
+from fastapi.responses import JSONResponse
+
 @app.post("/predict")
 def predict(request: PredictRequest):
     try:
         input_data = request.dict()
         print("[DEBUG] 요청 받은 데이터:", input_data)
 
-        # 전처리
         input_df = preprocess_input(input_data, artifacts)
         print("[DEBUG] 전처리된 데이터:", input_df)
 
-        # 모델 및 feature 리스트
         model = artifacts["model"]
         features = artifacts["features"]
 
-        # 누락된 컬럼은 0으로
         for c in features:
             if c not in input_df.columns:
                 input_df[c] = 0
+        input_df = input_df[features]
 
         input_df = input_df[features]
         print("[DEBUG] 모델 입력 최종 데이터:", input_df)
 
-        # 예측
         pred = float(model.predict(input_df)[0])
         print("[DEBUG] 예측 결과:", pred)
         return {"prediction": round(pred, 2)}
@@ -40,7 +41,7 @@ def predict(request: PredictRequest):
     except Exception as e:
         print("[ERROR] 예측 중 오류 발생:", str(e))
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail="예측 처리 중 오류 발생")
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.get("/")
 def root():

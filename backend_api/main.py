@@ -2,12 +2,10 @@ import sys
 import os
 sys.path.append(os.path.dirname(__file__))
 
-from schemas import PredictRequest
-from model_loader import load_artifacts, preprocess_input
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from schemas import PredictRequest
-from model_loader import load_artifacts, preprocess_input
+from .schemas import PredictRequest
+from .model_loader import load_artifacts, preprocess_input
 import traceback
 from fastapi.responses import JSONResponse
 

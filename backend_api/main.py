@@ -9,7 +9,6 @@ from .model_loader import load_artifacts, preprocess_input
 import traceback
 from fastapi.responses import JSONResponse
 
-
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 

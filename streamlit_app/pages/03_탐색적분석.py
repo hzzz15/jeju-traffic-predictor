@@ -49,7 +49,7 @@ def load_from_huggingface(filename):
         st.stop()
 
 # 데이터 불러오기
-X_train = load_from_huggingface('X_train_compressed.pkl')
+X_train = load_from_huggingface('X_train_sample.pkl')
 y_train = load_from_huggingface('y_train.pkl')
 
 train = X_train.copy()

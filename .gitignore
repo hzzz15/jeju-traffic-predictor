@@ -41,6 +41,7 @@ output/y_val.pkl
 
 # 모델 제외
 backend_api/model_artifacts/rf_model.pkl
+backend_api/model_artifacts/feature_columns.pkl
 
 # 기타
 *.log

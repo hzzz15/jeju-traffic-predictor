@@ -25,20 +25,27 @@ st.title("탐색적 분석 (EDA) 리포트")
 # Hugging Face에서 joblib 파일 불러오기
 @st.cache_data
 def load_from_huggingface(filename):
+    import mimetypes
+
     url = f"https://huggingface.co/hzz15/jeju-traffic-files/resolve/main/{filename}"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
 
-        # content-type이 text/html이면 오류 페이지일 가능성 있음
         content_type = response.headers.get("Content-Type", "")
         if "text" in content_type or "html" in content_type:
-            st.error(f"{filename}은 유효한 joblib 파일이 아닙니다.")
+            st.error(f"{filename} 응답이 텍스트입니다. 파일이 존재하지 않거나 링크가 잘못되었습니다.")
+            st.stop()
+
+        # 바이너리 확인: 파일 크기가 너무 작아도 의심
+        if len(response.content) < 1000:
+            st.error(f"{filename} 파일 크기가 비정상적으로 작습니다. 업로드 상태를 확인하세요.")
             st.stop()
 
         return joblib.load(BytesIO(response.content))
+
     except Exception as e:
-        st.error(f"{filename} 로드 실패: {e}")
+        st.error(f"{filename} 로드 중 오류 발생: {e}")
         st.stop()
 
 # 데이터 불러오기

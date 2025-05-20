@@ -37,15 +37,27 @@ def load_artifacts():
 def preprocess_input(data: dict, encoders: dict):
     df = pd.DataFrame([data])
 
-    df['시간대'] = df['time_type'].apply(lambda x: 1 if x == 'worktime' else 0)
+    # 디버깅 로그 추가
+    print("[DEBUG] 원본 입력:", df)
+
+    # 시간대 숫자화
+    df['time_code'] = df['time_type'].apply(lambda x: 1 if x == 'worktime' else 0)
+
+    # 계절 숫자화
     season_map = {'봄': 0, '여름': 1, '가을': 2, '겨울': 3}
     df['season_code'] = df['season'].map(season_map).fillna(0).astype(int)
+
+    # 7~9월 여부 숫자화
     august_map = {'Y': 1, 'N': 0}
     df['august_code'] = df['adjacent_august'].map(august_map).fillna(0).astype(int)
 
+    # 인코딩
     df['road_name'] = safe_transform(encoders['le_road'], df['road_name'])
-    df['시간대'] = safe_transform(encoders['le_time'], df['시간대'])
+    df['시간대'] = safe_transform(encoders['le_time'], df['time_code'])
     df['season'] = safe_transform(encoders['le_season'], df['season_code'])
     df['adjacent_august'] = safe_transform(encoders['le_august'], df['august_code'])
 
+    print("[DEBUG] 인코딩된 최종 DF:", df[['road_name', '시간대', 'season', 'adjacent_august']])
+
     return df[['road_name', '시간대', 'season', 'adjacent_august']]
+

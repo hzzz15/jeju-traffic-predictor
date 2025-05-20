@@ -27,7 +27,7 @@ st.title("탐색적 분석 (EDA) 리포트")
 def load_from_huggingface(filename):
     import mimetypes
 
-    url = f"https://huggingface.co/hzz15/jeju-traffic-files/resolve/main/{filename}"
+    url = f"https://huggingface.co/hzz15/jeju-traffic-files/resolve/main/{filename}?download=true"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -49,7 +49,7 @@ def load_from_huggingface(filename):
         st.stop()
 
 # 데이터 불러오기
-X_train = load_from_huggingface('X_train.pkl')
+X_train = load_from_huggingface('X_train_compressed.pkl')
 y_train = load_from_huggingface('y_train.pkl')
 
 train = X_train.copy()

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend_api.schemas import PredictRequest
-from backend_api.model_loader import load_artifacts, preprocess_input
+from schemas import PredictRequest
+from model_loader import load_artifacts, preprocess_input
 import traceback
 from fastapi.responses import JSONResponse
 

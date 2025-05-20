@@ -9,11 +9,10 @@ from io import BytesIO
 sns.set_style("whitegrid")
 plt.rcParams['axes.unicode_minus'] = False
 
-if platform.system() == "Darwin":  # macOS
+if platform.system() == "Darwin":  # macOS일 때만 AppleGothic 사용
     plt.rcParams["font.family"] = "AppleGothic"
 else:
-    plt.rcParams["font.family"] = "sans-serif"
-    plt.rcParams["font.sans-serif"] = ["NanumGothic", "Malgun Gothic", "DejaVu Sans", "Arial"]
+    plt.rcParams["font.family"] = "DejaVu Sans"
 
 st.title("EDA 시각화")
 

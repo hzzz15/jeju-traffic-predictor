@@ -16,7 +16,7 @@ if platform.system() == "Darwin":
     plt.rcParams["font.family"] = "AppleGothic"
 else:
     plt.rcParams["font.family"] = "DejaVu Sans"
-    plt.rcParams["font.sans-serif"] = ["NanumGothic", "Arial", "sans-serif"]
+    plt.rcParams["font.sans-serif"] = ["Arial", "sans-serif"]
 
 # 데이터 로딩
 base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'output'))
@@ -29,7 +29,7 @@ shap_exp = shap.Explanation(values=shap_values,
                             data=shap_sample_X,
                             feature_names=shap_sample_X.columns)
 
-# Streamlit 내용
+# Streamlit 제목 및 설명 (한글 가능)
 st.title("SHAP 기반 모델 해석 리포트")
 st.markdown("""
 이 보고서는 모델 예측 결과에 영향을 미친 주요 변수들을  
@@ -49,7 +49,7 @@ st.markdown("### 상위 5개 도로별 변수 영향력 분석")
 top_5_roads = shap_sample_X['road_name'].value_counts().head(5).index.tolist()
 
 for road in top_5_roads:
-    st.markdown(f"#### 도로명: `{road}`")
+    st.markdown(f"#### Road: `{road}`")
     
     road_mask = shap_sample_X['road_name'] == road
     road_shap_values = shap_values[road_mask.to_numpy()]
@@ -62,7 +62,7 @@ for road in top_5_roads:
 
     fig, ax = plt.subplots(figsize=(8, 4))
     sns.barplot(data=top_features, x='Mean |SHAP value|', y='Feature', ax=ax)
-    ax.set_title(f"{road} 도로에서 가장 영향력 있는 변수들")
+    ax.set_title(f"Top features for road {road}")
     st.pyplot(fig)
 
     top_feature = top_features.iloc[0]['Feature']
@@ -72,6 +72,7 @@ for road in top_5_roads:
     - 도로 설계나 운영 전략 수립 시 이 변수에 주목할 필요가 있습니다.
     """)
 
+# SHAP 해석 요약 (한글 유지)
 st.markdown("### 전체 요약")
 
 st.markdown("""

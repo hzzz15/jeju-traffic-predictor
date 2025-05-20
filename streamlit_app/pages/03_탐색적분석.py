@@ -61,18 +61,31 @@ numeric_cols = train.select_dtypes(include=["number"])
 fig, ax = plt.subplots(figsize=(10, 6))
 sns.heatmap(numeric_cols.corr(), annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
 st.pyplot(fig)
+st.markdown("""
+- `maximum_speed_limit`(제한속도)와 `target`(평균속도)이 가장 높은 양의 상관관계를 보임
+- `weight_restricted`, `road_type`도 양의 상관관계를 보이며 도로 조건이 속도에 영향을 줌
+- 반대로 `road_rating`, `lane_count`는 약한 음의 상관관계를 보임
+""")
 
 # 2. 도로 등급별 평균 속도
 st.subheader("2. 도로 등급별 평균 속도")
 fig, ax = plt.subplots(figsize=(8, 5))
 sns.boxplot(data=train, x="road_rating", y="target", ax=ax)
 st.pyplot(fig)
+st.markdown("""
+- 도로 등급이 낮을수록 평균 속도는 다소 높아지는 경향을 보임
+- 이는 높은 등급의 도로가 도심에 많아 신호, 교차로 영향 때문일 수 있음
+""")
 
 # 3. 차로 수별 평균 속도
 st.subheader("3. 차로 수별 평균 속도")
 fig, ax = plt.subplots(figsize=(8, 5))
 sns.boxplot(data=train, x="lane_count", y="target", ax=ax)
 st.pyplot(fig)
+st.markdown("""
+- 차로 수가 많다고 반드시 속도가 빠르진 않음
+- 도심일수록 차로가 많지만 혼잡도가 높을 수 있음
+""")
 
 # 4. 시간대별 평균 속도 변화
 st.subheader("4. 시간대별 평균 속도 변화")
@@ -83,6 +96,11 @@ if "base_hour" in train.columns:
     ax.set_xlabel("Hour (0~23)")
     ax.set_ylabel("Average Speed")
     st.pyplot(fig)
+    st.markdown("""
+    - 17~18시 속도가 가장 낮으며 퇴근 시간 정체 반영
+    - 새벽(0~5시) 시간대는 평균 속도 높음
+    """)
+
 
 # 5. 계절별 평균 속도
 st.subheader("5. 계절별 평균 속도")
@@ -91,6 +109,10 @@ train['season_label'] = train['season'].map(season_map)
 fig, ax = plt.subplots(figsize=(8, 5))
 sns.boxplot(data=train, x="season_label", y="target", ax=ax)
 st.pyplot(fig)
+st.markdown("""
+- 여름(7~8월) 평균 속도 가장 낮음 → 관광객 유입 영향
+- 봄/가을은 교통 분산으로 상대적으로 빠름
+""")
 
 # 6. 시간대 유형별 평균 속도
 st.subheader("6. 시간대 유형별 평균 속도")
@@ -101,3 +123,7 @@ order = ['Commute', 'Normal', 'Late Night']
 fig, ax = plt.subplots(figsize=(8, 5))
 sns.boxplot(data=train, x="time_type", y="target", order=order, ax=ax)
 st.pyplot(fig)
+st.markdown("""
+- 출퇴근 시간 속도가 가장 느림
+- 심야시간은 가장 빠름 → 교통량 적음
+""")
